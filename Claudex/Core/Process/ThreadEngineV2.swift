@@ -2,9 +2,8 @@
 //  ThreadEngineV2.swift
 //  Claudex
 //
-//  Refactored ThreadEngine using PTY + LocalAPIProxy interceptor pattern.
-//  Instead of parsing fragile CLI stdout/ANSI output, we intercept the actual
-//  API calls the CLI makes and drive UI state directly from pristine JSON.
+//  ThreadEngine using PTY + LocalAPIProxy interceptor pattern.
+//  PTY runs claude interactively, proxy intercepts API calls for UI state.
 //
 
 import Foundation
@@ -19,12 +18,14 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
     private(set) var currentTokens: Int = 0
     private(set) var lastCostUsd: Double = 0
     private(set) var currentModel: String = ""
+    private(set) var terminalOutput: String = ""
 
     private var proxy: LocalAPIProxy?
     private var pty: PTYConnection?
     private var proxyTask: Task<Void, Never>?
     private var ptyOutputTask: Task<Void, Never>?
     private var settingsFileURL: URL?
+    private var outputBuffer = ""
 
     private let envManager = EnvFileManager.shared
 
@@ -90,9 +91,8 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         let modelId = thread.modelOverride ?? appSettings.selectedModelId
         currentModel = modelId
 
-        // Build arguments for interactive mode (NO -p flag)
+        // Build arguments for interactive mode
         var args: [String] = [
-            "--no-input",
             "--verbose",
             "--dangerously-skip-permissions",
             "--model", modelId,
@@ -128,24 +128,20 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
             }
         }
 
-        // PTY output is for debugging only in this mode
-        ptyOutputTask = Task.detached { [weak self] in
-            guard let pty = self?.pty else { return }
+        // Route PTY output to terminalOutput buffer
+        ptyOutputTask = Task { @MainActor [weak self] in
+            guard let self = self, let pty = self.pty else { return }
             for await data in pty.output {
-                // Log PTY output for debugging (contains ANSI formatting)
-                if let text = String(data: data, encoding: .utf8), !text.isEmpty {
-                    Logger.shared.info("ThreadEngineV2 PTY: \(text.prefix(200))")
-                }
+                self.appendTerminalOutput(data)
             }
         }
 
-        // Termination handler via polling
+        // Termination handler
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             while self.pty?.isRunning == true {
-                try? await Task.sleep(nanoseconds: 500_000_000)
+                try? await Task.sleep(nanoseconds: 100_000_000)
             }
-            // Process ended
             Logger.shared.info("ThreadEngineV2: PTY ended")
             if self.state.isRunning {
                 self.state = .idle
@@ -175,7 +171,7 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         }
         self.settingsFileURL = settingsURL
 
-        // Create proxy for env provider mode too
+        // Create proxy for env provider mode
         let proxyHost: String
         if let url = URL(string: settings.baseURL), let host = url.host {
             proxyHost = host
@@ -199,7 +195,6 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
 
         var args = [
             "--bare",
-            "--no-input",
             "--verbose",
             "--settings", settingsURL.path,
             "--model", modelId,
@@ -232,24 +227,37 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
             }
         }
 
-        ptyOutputTask = Task.detached { [weak self] in
-            guard let pty = self?.pty else { return }
+        // Route PTY output to terminalOutput buffer
+        ptyOutputTask = Task { @MainActor [weak self] in
+            guard let self = self, let pty = self.pty else { return }
             for await data in pty.output {
-                if let text = String(data: data, encoding: .utf8), !text.isEmpty {
-                    Logger.shared.info("ThreadEngineV2 PTY: \(text.prefix(200))")
-                }
+                self.appendTerminalOutput(data)
             }
         }
 
         Task { @MainActor [weak self] in
             guard let self = self else { return }
             while self.pty?.isRunning == true {
-                try? await Task.sleep(nanoseconds: 500_000_000)
+                try? await Task.sleep(nanoseconds: 100_000_000)
             }
             Logger.shared.info("ThreadEngineV2: PTY ended")
             if self.state.isRunning {
                 self.state = .idle
             }
+        }
+    }
+
+    // MARK: - Terminal Output
+
+    @MainActor
+    private func appendTerminalOutput(_ data: Data) {
+        if let text = String(data: data, encoding: .utf8) {
+            outputBuffer.append(text)
+            // Keep last 100KB of output
+            if outputBuffer.count > 100_000 {
+                outputBuffer = String(outputBuffer.suffix(50_000))
+            }
+            terminalOutput = outputBuffer
         }
     }
 
@@ -261,7 +269,7 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         case .request(let info):
             Logger.shared.info("ThreadEngineV2 API request: \(info.method) \(info.path) bodySize=\(info.body?.count ?? 0)")
 
-            // Parse request body to extract messages/tool calls
+            // Parse request body to extract messages
             if let body = info.body,
                let json = try? JSONSerialization.jsonObject(with: body) as? [String: Any] {
                 if let messages = json["messages"] as? [[String: Any]] {
@@ -284,7 +292,6 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         case .response(let info):
             Logger.shared.info("ThreadEngineV2 API response: status=\(info.statusCode) bodySize=\(info.body?.count ?? 0)")
 
-            // Parse response to extract assistant messages and tool results
             if let body = info.body,
                let json = try? JSONSerialization.jsonObject(with: body) as? [String: Any] {
                 // Extract usage/cost
@@ -299,7 +306,7 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
                     for block in content {
                         if block["type"] as? String == "text",
                            let text = block["text"] as? String {
-                            appendOrCoalesceAssistantText(text)
+                            self.appendOrCoalesceAssistantText(text)
                         } else if block["type"] as? String == "tool_use",
                                   let name = block["name"] as? String,
                                   let input = block["input"] as? [String: Any],
@@ -335,7 +342,7 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         }
     }
 
-    // MARK: - Send Message
+    // MARK: - Send Message (via PTY stdin)
 
     func send(_ userText: String) async throws {
         let trimmed = userText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -346,23 +353,21 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         }
         Logger.shared.info("ThreadEngineV2.send: user text (\(trimmed.count) chars)")
 
-        // Ensure PTY is running
-        if pty == nil || !(pty?.isRunning ?? false) {
+        guard let pty = pty, pty.isRunning else {
+            // Restart if needed
             try await start()
+            guard let pty = self.pty, pty.isRunning else {
+                throw NSError(domain: "ThreadEngineV2", code: 1, userInfo: [NSLocalizedDescriptionKey: "PTY not running after start"])
+            }
+            // Write the message
+            try pty.writeString(trimmed + "\n")
+            return
         }
 
-        guard let currentPTY = pty, currentPTY.isRunning else {
-            throw NSError(domain: "ThreadEngineV2", code: 1, userInfo: [NSLocalizedDescriptionKey: "PTY not running after start"])
-        }
-
-        // Write user message to PTY
-        let jsonPayload = """
-        {"type":"user","message":{"role":"user","content":[{"type":"text","text":"\(trimmed.replacingOccurrences(of: "\"", with: "\\\""))"}]}}
-        """ + "\n"
-
+        // Write user input to PTY (interactive mode - just send the text with newline)
         do {
-            try currentPTY.writeString(jsonPayload)
-            Logger.shared.info("ThreadEngineV2.send: wrote \(jsonPayload.count) bytes to PTY")
+            try pty.writeString(trimmed + "\n")
+            Logger.shared.info("ThreadEngineV2.send: wrote to PTY")
         } catch {
             Logger.shared.error("ThreadEngineV2.send: write failed: \(error)")
             await MainActor.run {
@@ -373,6 +378,16 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
 
         await MainActor.run {
             self.state = .running
+        }
+    }
+
+    // MARK: - Write to PTY (for tool approvals, etc.)
+
+    func writeToPTY(_ text: String) {
+        do {
+            try pty?.writeString(text)
+        } catch {
+            Logger.shared.error("ThreadEngineV2.writeToPTY failed: \(error)")
         }
     }
 
