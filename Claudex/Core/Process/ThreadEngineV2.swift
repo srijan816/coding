@@ -77,9 +77,25 @@ final class ThreadEngineV2: @unchecked Sendable, ThreadEngineProtocol {
         let proxy = try LocalAPIProxy(targetHost: proxyHost, targetPort: proxyPort, authToken: authToken)
         self.proxy = proxy
 
-        // Start the proxy
+        // Start the proxy and wait for it to be ready with actual port
         proxy.start()
-        let proxyPortValue = proxy.port
+
+        // Wait for port to be assigned (the state handler sets it asynchronously)
+        let proxyPortValue = await withCheckedContinuation { (continuation: CheckedContinuation<UInt16, Never>) in
+            Task {
+                // Poll until port is set (max 5 seconds)
+                for _ in 0..<50 {
+                    let port = proxy.port
+                    if port != 0 {
+                        continuation.resume(returning: port)
+                        return
+                    }
+                    try? await Task.sleep(nanoseconds: 100_000_000) // 100ms
+                }
+                // Fallback - try to get whatever port was assigned
+                continuation.resume(returning: proxy.port)
+            }
+        }
         Logger.shared.info("ThreadEngineV2: proxy started on port \(proxyPortValue)")
 
         // Set up environment with proxy

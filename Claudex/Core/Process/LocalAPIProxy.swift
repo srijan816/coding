@@ -46,6 +46,8 @@ final class LocalAPIProxy: @unchecked Sendable {
     private var connections: [NWConnection] = []
     private let connectionLock = NSLock()
 
+    private var portContinuation: AsyncStream<UInt16>.Continuation?
+
     var events: AsyncStream<APIEvent> {
         AsyncStream { continuation in
             self.eventContinuation = continuation
@@ -53,6 +55,13 @@ final class LocalAPIProxy: @unchecked Sendable {
     }
 
     private var eventContinuation: AsyncStream<APIEvent>.Continuation?
+
+    /// Stream that emits the port once the proxy is ready
+    var portStream: AsyncStream<UInt16> {
+        AsyncStream { continuation in
+            self.portContinuation = continuation
+        }
+    }
 
     init(targetHost: String, targetPort: UInt16, authToken: String) throws {
         self.targetHost = targetHost
@@ -71,6 +80,7 @@ final class LocalAPIProxy: @unchecked Sendable {
                 if let port = listener.port?.rawValue {
                     self?._port = port
                     Logger.shared.info("LocalAPIProxy listening on port \(port)")
+                    self?.portContinuation?.yield(port)
                 }
             }
         }
