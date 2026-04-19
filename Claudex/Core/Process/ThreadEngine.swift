@@ -93,7 +93,6 @@ final class ThreadEngine: @unchecked Sendable {
             "--verbose",
             "--dangerously-skip-permissions",
             "--model", modelId,
-            "--cwd", project.rootPath.path,
         ]
 
         if let sessionId = thread.sessionId {
@@ -213,7 +212,6 @@ final class ThreadEngine: @unchecked Sendable {
             "--input-format", "stream-json",
             "--verbose",
             "--settings", settingsURL.path,
-            "--cwd", project.rootPath.path,
         ]
 
         if let sessionId = thread.sessionId {
