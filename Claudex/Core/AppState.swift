@@ -21,7 +21,7 @@ final class AppState {
 
     let projectStore: ProjectStore
 
-    private(set) var activeEngines: [UUID: ThreadEngine] = [:]
+    private(set) var activeEngines: [UUID: ThreadEngineProtocol] = [:]
 
     var selectedProjectId: UUID?
     var selectedThreadId: UUID?
@@ -59,14 +59,15 @@ final class AppState {
 
     // MARK: - Engine Management
 
-    func engine(for threadId: UUID) -> ThreadEngine? {
+    func engine(for threadId: UUID) -> ThreadEngineProtocol? {
         activeEngines[threadId]
     }
 
     func startEngine(for thread: Thread, in project: Project) async throws {
         guard activeEngines[thread.id] == nil else { return }
 
-        let engine = ThreadEngine(thread: thread, project: project)
+        // Use ThreadEngineV2 with PTY + LocalAPIProxy interceptor pattern
+        let engine = ThreadEngineV2(thread: thread, project: project)
         activeEngines[thread.id] = engine
 
         try await engine.start()

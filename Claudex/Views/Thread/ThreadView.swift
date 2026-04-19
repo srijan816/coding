@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThreadView: View {
     let thread: Thread
-    var engine: ThreadEngine?
+    var engine: ThreadEngineProtocol?
 
     @State private var composerText: String = ""
     @State private var isSending: Bool = false

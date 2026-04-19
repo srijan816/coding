@@ -21,7 +21,7 @@ enum EngineState: Equatable {
 }
 
 @Observable
-final class ThreadEngine: @unchecked Sendable {
+final class ThreadEngine: @unchecked Sendable, ThreadEngineProtocol {
     let thread: Thread
     let project: Project
 
