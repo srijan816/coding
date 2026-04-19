@@ -1,0 +1,40 @@
+{
+  "source": "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Views/Inspector/TerminalPaneView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "No project selected",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "$",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Run",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 62
+        }
+      }
+    ]
+  },
+  "version": 1
+}

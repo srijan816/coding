@@ -1,0 +1,23 @@
+{
+  "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Core/Config/SettingsJSONBuilder.swift" : {
+    "const-values" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SettingsJSONBuilder.swiftconstvalues",
+    "dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SettingsJSONBuilder.d",
+    "diagnostics" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SettingsJSONBuilder.dia",
+    "object" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SettingsJSONBuilder.o",
+    "swift-dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SettingsJSONBuilder.swiftdeps"
+  },
+  "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Core/Git/GitRunner.swift" : {
+    "const-values" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/GitRunner.swiftconstvalues",
+    "dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/GitRunner.d",
+    "diagnostics" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/GitRunner.dia",
+    "object" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/GitRunner.o",
+    "swift-dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/GitRunner.swiftdeps"
+  },
+  "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Core/Models/ClaudeModel.swift" : {
+    "const-values" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ClaudeModel.swiftconstvalues",
+    "dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ClaudeModel.d",
+    "diagnostics" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ClaudeModel.dia",
+    "object" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ClaudeModel.o",
+    "swift-dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ClaudeModel.swiftdeps"
+  }
+}

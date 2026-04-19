@@ -1,0 +1,23 @@
+{
+  "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Core/Persistence/ProjectStore.swift" : {
+    "const-values" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ProjectStore.swiftconstvalues",
+    "dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ProjectStore.d",
+    "diagnostics" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ProjectStore.dia",
+    "object" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ProjectStore.o",
+    "swift-dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/ProjectStore.swiftdeps"
+  },
+  "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Core/Persistence/SessionStore.swift" : {
+    "const-values" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SessionStore.swiftconstvalues",
+    "dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SessionStore.d",
+    "diagnostics" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SessionStore.dia",
+    "object" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SessionStore.o",
+    "swift-dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/SessionStore.swiftdeps"
+  },
+  "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Core/Process/StreamJSONParser.swift" : {
+    "const-values" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/StreamJSONParser.swiftconstvalues",
+    "dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/StreamJSONParser.d",
+    "diagnostics" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/StreamJSONParser.dia",
+    "object" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/StreamJSONParser.o",
+    "swift-dependencies" : "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/build/Build/Intermediates.noindex/Claudex.build/Debug/Claudex.build/Objects-normal/arm64/StreamJSONParser.swiftdeps"
+  }
+}

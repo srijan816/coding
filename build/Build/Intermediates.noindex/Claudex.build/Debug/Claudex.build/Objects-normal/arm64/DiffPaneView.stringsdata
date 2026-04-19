@@ -1,0 +1,56 @@
+{
+  "source": "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Views/Inspector/DiffPaneView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "No git repository",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Working tree clean",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Staged",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Changes",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Untracked",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Select a file to view diff",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 149
+        }
+      }
+    ]
+  },
+  "version": 1
+}

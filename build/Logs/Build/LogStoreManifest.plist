@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>12</integer>
+	<key>logs</key>
+	<dict>
+		<key>4B752055-471D-41E6-840A-3A06EFE0C8FE</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4B752055-471D-41E6-840A-3A06EFE0C8FE.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>16</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Claudex project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Claudex</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Claudex with scheme Claudex and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>798274766.14268994</real>
+			<key>timeStoppedRecording</key>
+			<real>798274779.63274598</real>
+			<key>title</key>
+			<string>Building project Claudex with scheme Claudex and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>4B752055-471D-41E6-840A-3A06EFE0C8FE</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,24 @@
+{
+  "source": "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "No thread selected",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Select a thread from the sidebar or create a new one",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 54
+        }
+      }
+    ]
+  },
+  "version": 1
+}

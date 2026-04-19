@@ -1,0 +1,16 @@
+{
+  "source": "/Volumes/SrijanExt/Code/MacOs/Claudex/Claudex/Claudex/Views/Thread/ComposerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "⌘⏎ to send, ⌘. to stop",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 33
+        }
+      }
+    ]
+  },
+  "version": 1
+}
