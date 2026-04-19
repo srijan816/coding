@@ -164,8 +164,8 @@ struct ThreadView: View {
 
             do {
                 if engine == nil {
-                    guard let project = AppState.shared.selectedProject else {
-                        Logger.shared.error("No project selected")
+                    guard let project = AppState.shared.project(for: thread.id) else {
+                        Logger.shared.error("No project for thread \(thread.id)")
                         return
                     }
                     try await AppState.shared.startEngine(for: thread, in: project)
